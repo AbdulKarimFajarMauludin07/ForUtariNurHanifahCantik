@@ -1,0 +1,535 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+
+body {
+  background: #ffe6ee;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* LAYER */
+.layer {
+  position: absolute;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.layer.active {
+  display: flex;
+}
+
+/* CARD */
+.card {
+  background: #fff5f8;
+  padding: 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 15px 30px rgba(255,105,180,.3);
+}
+
+.card.big {
+  max-width: 650px;
+}
+
+h1, h2 {
+  color: #ff5c8a;
+  margin-bottom: 10px;
+}
+
+
+
+.long-text {
+  margin: 15px 0;
+  line-height: 1.6;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 1px solid #ffb6c1;
+}
+
+button {
+  background: #ff7aa2;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  margin: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: .9;
+}
+
+.btn-group {
+  margin-top: 10px;
+  
+}
+
+/* ALERT */
+.alert {
+  display: none;
+  background: #ffd1dc;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+/* GALLERY */
+.gallery {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.gallery img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* VIDEO */
+video {
+  width: 100%;
+  border-radius: 15px;
+  margin: 10px 0;
+}
+
+/* EMOJI RAIN */
+#emojiRain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.emoji {
+  position: absolute;
+  font-size: 28px;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  from {
+    transform: translateY(-50px) rotate(0deg);
+  }
+  to {
+    transform: translateY(110vh) rotate(360deg);
+  }
+}
+
+/* FONT UCAPAN (LAYER 1) */
+
+#layer1{
+  font-size: 20px;
+  color: #ff7aa2;
+}
+/* ===== CONFIRM POPUP ===== */
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 182, 193, 0.45);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.confirm-card {
+  background: #fff5f8;
+  padding: 25px;
+  border-radius: 18px;
+  width: 90%;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 15px 30px rgba(255,105,180,.35);
+  animation: popConfirm .3s ease;
+}
+
+.confirm-card {
+  
+  color: #ff7aa2;
+  margin-bottom: 10px;
+}
+
+.confirm-card  {
+  margin-bottom: 15px;
+  color: #555;
+}
+
+.btn-cancel {
+  background: #ff5c8a;
+  color: #ffffff;
+}
+.btn-yes {
+  background:  #ff7aa2;
+  color: #ffffff;
+}
+
+@keyframes popConfirm {
+  from {
+    transform: scale(.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.runaway-confirm {
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+/* SEMUA PARAGRAF */
+p {
+  font-family: 'Dancing Script', cursive;
+  font-size: 18px;
+  font-weight: 500;
+  color: #555;
+  line-height: 1.8;
+}
+
+/* SEMUA H2 */
+h2 {
+  font-family: 'Dancing Script', cursive;
+  font-size: 24px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 10px;
+}
+/* SEMUA H1 */
+h1 {
+  font-family: 'Pacifico', cursive;
+  font-size: 38px;
+  font-weight: 400;
+  color: #ff7aa2;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+/* OVERLAY GELAP */
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* CARD PUTIH */
+.popup-card {
+  background: #ffffff;
+  padding: 25px 20px;
+  border-radius: 16px;
+  width: 85%;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0,0,0,.3);
+  animation: popupScale .3s ease;
+}
+
+.popup-text {
+  font-family: 'Dancing Script', cursive;
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+.popup-btn {
+  background: #ff7aa2;
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+@keyframes popupScale {
+  from {
+    transform: scale(.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.music-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background: #eeffa2;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  transition: transform 0.2s, background 0.3s;
+  z-index: 999; /* pastikan di atas semua layer */
+}
+
+.music-icon:hover {
+  transform: scale(1.1);
+  background: #ff7aa2;
+}
+.foto-container {
+  display: flex;
+  flex-wrap: wrap; /* Supaya foto otomatis pindah ke baris baru */
+  justify-content: center; /* Supaya foto berada di tengah */
+  gap: 10px; /* Jarak antar foto */
+  margin-top: 20px;
+}
+.foto-container img {
+  width: 200px; /* Sesuaikan ukuran foto */
+  height: 200px;
+  border-radius: 10px; /* Kalau mau pojok bulat */
+  object-fit: cover; /* Supaya foto tidak melenceng */
+}
+/* pastikan layer3 full height dan scrollable */
+#layer3 {
+  overflow-y: auto;          /* scroll di layer */
+  align-items: flex-start;  /* konten dari atas */
+  padding: 20px 0;
+}
+
+/* optional: biar konten nggak nempel pinggir */
+#layer3 .card {
+  margin: 0 auto;
+}
+
+
+
+#layer4 {
+  overflow-y: auto;
+  align-items: flex-start;
+  padding: 20px 0;
+}
+#layer3,
+#layer4 {
+  overflow-y: auto;
+  align-items: flex-start;
+  padding: 20px 0;
+}
+
+#layer3 .card,
+#layer4 .card {
+  margin: 0 auto 40px;
+}
+
+
+
+
+
+
+/* ===== COMMENT BOX ===== */
+#commentList {
+  margin-top: 15px;
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+/* BOX KOMENTAR */
+.comment {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  animation: fadeIn 0.4s ease;
+}
+
+/* NAMA */
+.comment b {
+  color: #ff4d6d;
+  font-size: 14px;
+}
+
+/* TEKS */
+.comment p {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: #333;
+}
+
+/* TOMBOL */
+.comment button {
+  margin-top: 6px;
+  margin-right: 6px;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.comment button:nth-child(3) {
+  background: #ff6b6b;
+  color: white;
+}
+
+.comment button:nth-child(2) {
+  background: #ffa502;
+  color: white;
+}
+
+/* ANIMASI */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* CHAT CONTAINER */
+.chat {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.chat.left {
+  justify-content: flex-start;
+}
+
+.chat.right {
+  justify-content: flex-end;
+}
+
+/* BUBBLE */
+.bubble {
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: #f1f1f1;
+  position: relative;
+  animation: fadeIn 0.3s ease;
+}
+
+/* WARNA KANAN */
+.chat.right .bubble {
+  background: #ff6b81;
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+/* WARNA KIRI */
+.chat.left .bubble {
+  background: #ffffff;
+  border-bottom-left-radius: 4px;
+}
+
+/* NAMA */
+.bubble .name {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 4px;
+  color: #000000;
+}
+
+/* TEXT */
+.bubble .text {
+  font-size: 14px;
+  color: #000;
+}
+
+/* TIME */
+.bubble .time {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-top: 6px;
+  text-align: right;
+}
+#commentList {
+  max-height: 350px;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.chat {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.chat.left {
+  justify-content: flex-start;
+}
+
+.chat.right {
+  justify-content: flex-end;
+}
+
+.bubble {
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 15px;
+  font-size: 14px;
+  background: #000000;
+}
+
+.chat.left .bubble {
+  border-top-left-radius: 0;
+}
+
+.chat.right .bubble {
+  background: #ffffff;
+  border-top-right-radius: 0;
+}
+
+.name {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.text {
+  margin-bottom: 4px;
+}
+
+.time {
+  font-size: 11px;
+  color: #000000;
+  text-align: right;
+}
+
+.admin-btn {
+  text-align: right;
+  margin-top: 4px;
+}
+
+.admin-btn button {
+  font-size: 11px;
+  margin-left: 4px;
+}
+
+video {
+  width: 100%;
+  max-height: 60vh;     /* biar ga kegedean */
+  object-fit: contain; /* potret / landscape aman */
+  border-radius: 15px;
+  background: #000;
+}

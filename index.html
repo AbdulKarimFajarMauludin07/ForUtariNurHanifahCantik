@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>For Utari Nur Hanifah Cantik 🤍✨</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<!-- EMOJI RAIN -->
+<div id="emojiRain"></div>
+
+<!-- ===== LAYER 1 ===== -->
+<section class="layer active" id="layer1">
+  <div class="card">
+    <h1>Hai Utari Nur Hanifah 👋</h1>
+    <p class="quote">Jawab Pertanyaan Ini Dengan Jujur</p>
+    <p>Seberapa Sayang Kamu Sama Aku Yang Paling Ganteng Ini? 😎</p>
+
+    <div class="btn-group">
+      <button class="btn-yes" onclick="openConfirm()">Sayanggg Bangettt 😘</button>
+      <button class="runaway">Biasa Aja 😏</button>
+      <button class="runaway">Ngga Sayang 😝</button>
+    </div>
+
+<!-- ===== KONFIRMASI LANJUT ===== -->
+<div class="confirm-overlay" id="confirmBox">
+  <div class="confirm-card">
+    <h2>OMG!</h2>
+    <p> Ternyata Kamu Sayang Banget Yaa Sama Akuu 😍</p>
+
+    <div class="btn-group">
+      <button class="btn-yes" onclick="confirmNext()">Iyaa Dong Harus 😘</button>
+      <button class="btn-cancel runaway-confirm" onclick="closeConfirm()">Biasa Aja 😑</button>
+      <button class="btn-cancel runaway-confirm" onclick="closeConfirm()">Ngga Sayang 🤬</button>
+
+    </div>
+  </div>
+</div>
+
+  </div>
+</section>
+
+<!-- ===== LAYER 2 ===== -->
+<!-- ===== LAYER 2 ===== -->
+<section class="layer" id="layer2">
+  <div class="card">
+    <h1>Di Isi Dulu Yaa Sayangku 🤍✨</h1>
+    <p>Silahkan Masukan ID & Password Yang Diberikan Mas EL</p>
+
+    <input type="text" id="loginId" placeholder="ID">
+    <input type="password" id="loginPass" placeholder="Password">
+
+    <button onclick="checkLogin()">Klik Lanjut</button>
+  </div>
+</section>
+
+<!-- ===== POPUP LOGIN SALAH ===== -->
+<div class="popup" id="loginError">
+  <div class="popup-card">
+    <p class="popup-text">
+      Ops! ID Atau Password Salah<br>
+      Tapi Gapapa Kok, Kita Coba Lagi Yuk 🥰
+    </p>
+    <button class="popup-btn" onclick="closeLoginError()">Coba Lagi</button>
+  </div>
+</div>
+
+
+<!-- ===== LAYER 3 ===== -->
+<section class="layer" id="layer3">
+  <div class="card big">
+    <h1>🎉 Selamat Ulang Tahun 🎂</h1>
+    <h1>Utari Nur Hanifah</h1>
+
+    <!-- tombol musik bulat -->
+<div id="musicBtn" class="music-icon">🔊</div>
+
+<audio id="bgMusic" loop>
+  <source src="musik.mp3" type="audio/mpeg">
+</audio>
+
+
+    <p class="long-text">
+      Semoga di hari ulang tahunmu ini, kamu selalu diberi kesehatan,
+      kebahagiaan, kelancaran rezeki, dan semua hal baik yang kamu impikan.
+      Terima kasih sudah hadir dan menemani hari-hariku 🤍✨
+    </p>
+
+    <div class="foto-container">
+      <img src="foto1.jpg">
+      <img src="foto1.jpg">
+      <img src="foto1.jpg">
+      <img src="foto1.jpg">
+      <img src="foto1.jpg">
+      <img src="foto1.jpg">
+      <img src="foto1.jpg">
+      <img src="foto1.jpg">
+      <img src="foto1.jpg">
+      <img src="foto1.jpg">
+      <img src="foto1.jpg">
+      <img src="foto1.jpg">
+      <img src="foto1.jpg">
+      <img src="foto1.jpg">
+      <img src="foto1.jpg">
+      <img src="foto1.jpg">
+      <img src="foto1.jpg">
+      <img src="foto1.jpg">
+      <img src="foto1.jpg">
+      <img src="foto1.jpg">
+    </div>
+    <br>
+    <p>Klik Tombol "Next" Yaa Untuk Lanjut Ke Slide Terakhir</p>
+    <button onclick="nextLayer()">Next </button>
+  </div>
+</section>
+
+<!-- ===== LAYER 4 ===== -->
+<section class="layer" id="layer4">
+  <div class="card big">
+    <h1>Last 💌</h1>
+
+<video
+  src="video_20250823_222020.mp4"
+  controls
+  muted
+  playsinline
+  preload="metadata"
+  controlsList="nodownload noplaybackrate"
+></video>
+
+
+
+  <div class="comment-box">
+  <h2>Tinggalkan Pesan 💬</h2>
+
+  <input type="text" id="name" placeholder="Nama kamu">
+  <input type="text" id="comment" placeholder="Tulis Pesan...">
+  <button onclick="sendComment()">Kirim</button>
+  <button onclick="enterAdminMode()" style="font-size:12px">
+  Mas EL
+</button>
+
+  <div id="commentList"></div>
+</div>
+
+
+    <div class="btn-group">
+      <button onclick="prevLayer()">Kembali</button>
+      <button onclick="goToFirst()">Keluar</button>
+    </div>
+  </div>
+</section>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAZaauXHuMsDoJKCZr0AJ66Y1isLuUUo08",
+    authDomain: "utari-nur-hanifah-birthday.firebaseapp.com",
+    databaseURL: "https://utari-nur-hanifah-birthday-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "utari-nur-hanifah-birthday",
+    storageBucket: "utari-nur-hanifah-birthday.firebasestorage.app",
+    messagingSenderId: "12232625190",
+    appId: "1:12232625190:web:cf8fc93d0190cfcc7e6ae7"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+
+</script>
+
+<!-- SCRIPT TERAKHIR -->
+<script src="script.js"></script>
+
+
+
+</body>
+</html>
