@@ -125,8 +125,8 @@ document.addEventListener("mouseover", e => {
     btn.style.top = y + "px";
   }
 });
-const CORRECT_ID = "Utari Nur Hanifah";
-const CORRECT_PASS = "Utari Cantik Banget";
+const CORRECT_ID = "1";
+const CORRECT_PASS = "1";
 
 function checkLogin() {
   const id = document.getElementById("loginId").value.trim();
@@ -156,20 +156,107 @@ document.addEventListener("click", () => {
 
 
 // ===== FIREBASE COMMENT FINAL FIX =====
+// ===== ADMIN FINAL (MASUK / CANCEL / KELUAR) =====
+const ADMIN_KEY = "1";
 
-// ===== ADMIN =====
-const ADMIN_KEY = "utaricantik";
-
+// klik tombol "Mas EL"
 function enterAdminMode() {
-  const key = prompt("Mas EL Passwordnya:");
-  if (key === ADMIN_KEY) {
-    sessionStorage.setItem("isAdmin", "true");
-    alert("Selamat Datang Mas EL 👋 ");
-    location.reload();
+  const isAdmin = sessionStorage.getItem("isAdmin") === "true";
+
+  const popup = document.getElementById("adminPopup");
+  const text = document.getElementById("adminPopupText");
+  const btnGroup = document.getElementById("adminBtnGroup");
+  const input = document.getElementById("adminPassword");
+
+  popup.style.display = "flex";
+  btnGroup.innerHTML = "";
+
+  if (isAdmin) {
+    // === SUDAH ADMIN ===
+    text.innerText = "Kamu sedang di Mode Admin 👑";
+    input.style.display = "none";
+
+    btnGroup.innerHTML = `
+      <button class="popup-btn" onclick="logoutAdmin()">Keluar Admin</button>
+      <button class="popup-btn" onclick="closeAdminPopup()" style="background:#ccc;color:#333">
+        Cancel
+      </button>
+    `;
   } else {
-    alert("Ops! Password Kamu Salah 🙅‍♂️");
+    // === BELUM ADMIN ===
+    text.innerText = "Masukkan Password Mas EL 🔐";
+    input.style.display = "block";
+    input.value = "";
+
+    btnGroup.innerHTML = `
+      <button class="popup-btn" onclick="checkAdmin()">Masuk</button>
+      <button class="popup-btn" onclick="closeAdminPopup()" style="background:#ccc;color:#333">
+        Cancel
+      </button>
+    `;
   }
 }
+
+// tutup popup
+function closeAdminPopup() {
+  document.getElementById("adminPopup").style.display = "none";
+  document.getElementById("adminPassword").value = "";
+}
+
+// cek password
+function checkAdmin() {
+  const pass = document.getElementById("adminPassword").value.trim();
+
+  if (pass === ADMIN_KEY) {
+    sessionStorage.setItem("isAdmin", "true");
+    closeAdminPopup();
+    showNotif("Admin Mode Aktif 👑");
+  } else {
+    closeAdminPopup();
+    document.getElementById("adminErrorPopup").style.display = "flex";
+  }
+}
+
+// logout admin
+function logoutAdmin() {
+  sessionStorage.removeItem("isAdmin");
+  closeAdminPopup();
+  showNotif("Keluar dari Mode Admin 🚪");
+}
+
+// popup error
+function retryAdmin() {
+  document.getElementById("adminErrorPopup").style.display = "none";
+  enterAdminMode();
+}
+
+function closeAdminError() {
+  document.getElementById("adminErrorPopup").style.display = "none";
+}
+
+
+
+// tombol "coba lagi"
+function retryAdmin() {
+  document.getElementById("adminErrorPopup").style.display = "none";
+  enterAdminMode();
+}
+
+// tombol "batal"
+function closeAdminError() {
+  document.getElementById("adminErrorPopup").style.display = "none";
+}
+
+
+
+
+
+
+
+
+
+
+
 
 // ===== FIREBASE REF =====
 const commentRef = firebase.database().ref("comments");
@@ -179,19 +266,20 @@ function sendComment() {
   const name = document.getElementById("name").value.trim();
   const comment = document.getElementById("comment").value.trim();
 
-  if (!name || !comment) {
-    alert("Nama dan Pesan Wajib Diisi!");
-    return;
-  }
+ if (!name || !comment) {
+  showNotif("Nama dan Pesan Wajib Diisi!");
+  return;
+}
 
   // ADMIN DETEKSI DARI NAMA
-  const isAdminUser = name.toLowerCase() === "mas el";
+  const isAdminSession = sessionStorage.getItem("isAdmin") === "true";
 
   commentRef.push({
     name: name,
     text: comment,
     time: Date.now(),
-    isAdmin: isAdminUser
+    isAdmin: isAdminSession
+
   });
 
   document.getElementById("comment").value = "";
@@ -210,7 +298,6 @@ function formatTime(timestamp) {
   });
 }
 
-// ===== TAMPILKAN KOMENTAR =====
 commentRef.on("value", snapshot => {
   const data = snapshot.val();
   const list = document.getElementById("commentList");
@@ -225,15 +312,18 @@ commentRef.on("value", snapshot => {
 
   for (let id in data) {
     const item = data[id];
-    const time = formatTime(item.time);
-
-    // POSISI CHAT
     const side = item.isAdmin ? "right" : "left";
+    const time = formatTime(item.time);
 
     list.innerHTML += `
       <div class="chat ${side}">
         <div class="bubble">
-          <div class="name">${item.name}</div>
+
+          <div class="name">
+               ${item.name}
+               ${item.isAdmin ? `<span class="admin-badge">👑</span>` : ""}
+          </div>
+
           <div class="text">${item.text}</div>
           <div class="time">${time}</div>
 
@@ -253,20 +343,63 @@ commentRef.on("value", snapshot => {
   list.scrollTop = list.scrollHeight;
 });
 
+
 // ===== ADMIN ACTION =====
+let deleteTargetId = null;
+
 function deleteComment(id) {
-  if (confirm("Hapus komentar ini?")) {
-    commentRef.child(id).remove();
-  }
+  deleteTargetId = id;
+  document.getElementById("deleteConfirmPopup").style.display = "flex";
 }
 
-function editComment(id) {
-  commentRef.child(id).once("value", snap => {
-    const oldText = snap.val().text;
-    const newText = prompt("Edit komentar:", oldText);
+function confirmDeleteComment() {
+  if (deleteTargetId) {
+    commentRef.child(deleteTargetId).remove();
+    deleteTargetId = null;
+  }
+  closeDeletePopup();
+}
 
-    if (newText && newText.trim() !== "") {
-      commentRef.child(id).update({ text: newText });
-    }
+function closeDeletePopup() {
+  document.getElementById("deleteConfirmPopup").style.display = "none";
+  deleteTargetId = null;
+}
+
+
+let editTargetId = null;
+
+// buka popup edit
+function editComment(id) {
+  editTargetId = id;
+
+  commentRef.child(id).once("value", snap => {
+    document.getElementById("editCommentInput").value = snap.val().text;
+    document.getElementById("editCommentPopup").style.display = "flex";
   });
+}
+
+// simpan edit
+function confirmEditComment() {
+  const newText = document.getElementById("editCommentInput").value.trim();
+
+  if (newText && editTargetId) {
+    commentRef.child(editTargetId).update({ text: newText });
+  }
+
+  closeEditPopup();
+}
+
+// tutup popup
+function closeEditPopup() {
+  document.getElementById("editCommentPopup").style.display = "none";
+  editTargetId = null;
+}
+
+function showNotif(text) {
+  document.getElementById("notifText").innerText = text;
+  document.getElementById("notifPopup").style.display = "flex";
+}
+
+function closeNotif() {
+  document.getElementById("notifPopup").style.display = "none";
 }
