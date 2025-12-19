@@ -50,7 +50,7 @@
 <section class="layer" id="layer2">
   <div class="card">
     <h1>Di Isi Dulu Yaa Sayangku 🤍✨</h1>
-    <p>Silahkan Masukan ID & Password Yang Diberikan Mas EL</p>
+    <p>Silahkan Masukan ID & Password Yang Diberikan Oleh Mas EL Tersayang</p>
 
     <input type="text" id="loginId" placeholder="ID">
     <input type="password" id="loginPass" placeholder="Password">
@@ -90,33 +90,62 @@
       kebahagiaan, kelancaran rezeki, dan semua hal baik yang kamu impikan.
       Terima kasih sudah hadir dan menemani hari-hariku 🤍✨
     </p>
-
-    <div class="foto-container">
-      <img src="foto1.jpg">
-      <img src="foto1.jpg">
-      <img src="foto1.jpg">
-      <img src="foto1.jpg">
-      <img src="foto1.jpg">
-      <img src="foto1.jpg">
-      <img src="foto1.jpg">
-      <img src="foto1.jpg">
-      <img src="foto1.jpg">
-      <img src="foto1.jpg">
-      <img src="foto1.jpg">
-      <img src="foto1.jpg">
-      <img src="foto1.jpg">
-      <img src="foto1.jpg">
-      <img src="foto1.jpg">
-      <img src="foto1.jpg">
-      <img src="foto1.jpg">
-      <img src="foto1.jpg">
-      <img src="foto1.jpg">
-      <img src="foto1.jpg">
-    </div>
     <br>
-    <p>Klik Tombol "Next" Yaa Untuk Lanjut Ke Slide Terakhir</p>
-    <button onclick="nextLayer()">Next </button>
+    <div class="moment">
+      <h2>Moment Kita</h2>
+    </div>
+    
+<!-- Tambahkan foto-item lain sesuai kebutuhan -->
+<div class="foto-container">
+
+  <div class="foto-item">
+    <img src="foto1.jpg" alt="Pantai">
+    <p>Foto Utari Nur Hanifah</p>
   </div>
+
+  <div class="foto-item">
+    <img src="foto1.jpg" alt="Pantai">
+    <p>Foto Utari Nur Hanifah</p>
+  </div>
+
+  <div class="foto-item">
+    <img src="foto1.jpg" alt="Pantai">
+    <p>Foto Utari Nur Hanifah</p>
+  </div>
+
+  <div class="foto-item">
+    <img src="foto1.jpg" alt="Pantai">
+    <p>Foto Utari Nur Hanifah</p>
+  </div>
+
+  <div class="foto-item">
+    <img src="foto1.jpg" alt="Pantai">
+    <p>Foto Utari Nur Hanifah</p>
+  </div>
+
+  <div class="foto-item">
+    <img src="foto1.jpg" alt="Pantai">
+    <p>Foto Utari Nur Hanifah</p>
+  </div>
+  
+  <div class="foto-item">
+    <img src="foto1.jpg" alt="Pantai">
+    <p>Foto Utari Nur Hanifah</p>
+  </div>
+
+  <div class="foto-item">
+    <img src="foto1.jpg" alt="Pantai">
+    <p>Foto Utari Nur Hanifah</p>
+  </div>
+
+</div>
+
+<!-- Wrapper tombol Next -->
+<div class="next-btn-wrapper">
+  <p>Klik Tombol "Next" Yaa Untuk Lanjut Ke Slide Terakhir</p>
+  <button onclick="nextLayer()">Next</button>
+</div>
+
 </section>
 
 <!-- ===== LAYER 4 ===== -->
@@ -175,6 +204,81 @@
   const database = firebase.database();
 
 </script>
+
+<!-- ===== NOTIFIKASI TENGAH ===== -->
+<div class="popup" id="notifPopup">
+  <div class="popup-card">
+    <p class="popup-text" id="notifText"></p>
+    <button class="popup-btn" onclick="closeNotif()">OK</button>
+  </div>
+</div>
+
+<!-- ===== POPUP ADMIN ===== -->
+<div class="popup" id="adminPopup">
+  <div class="popup-card">
+    <p class="popup-text" id="adminPopupText">
+      Masukkan Password Mas EL 🔐
+    </p>
+
+    <input
+      type="password"
+      id="adminPassword"
+      placeholder="Password"
+      style="width:100%; padding:10px; border-radius:10px; border:1px solid #ddd; margin-bottom:15px;"
+    >
+
+    <div class="btn-group" id="adminBtnGroup">
+      <!-- tombol akan diisi dari JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ===== POPUP ADMIN ERROR ===== -->
+<div class="popup" id="adminErrorPopup">
+  <div class="popup-card">
+    <h3>❌ Password Salah</h3>
+    <p>Coba lagi atau batal ya 😊</p>
+
+    <div class="btn-group">
+      <button class="popup-btn" onclick="retryAdmin()">Coba Lagi</button>
+      <button class="popup-btn" onclick="closeAdminError()">Batal</button>
+    </div>
+  </div>
+</div>
+<!-- ===== POPUP KONFIRMASI HAPUS KOMENTAR ===== -->
+<div class="popup" id="deleteConfirmPopup">
+  <div class="popup-card">
+    <h3>⚠️ Hapus Komentar?</h3>
+    <p>Komentar ini akan dihapus permanen.</p>
+
+    <div class="btn-group">
+      <button class="popup-btn" onclick="confirmDeleteComment()">Hapus</button>
+      <button class="popup-btn" onclick="closeDeletePopup()" style="background:#ccc;color:#333;">
+        Batal
+      </button>
+    </div>
+  </div>
+</div>
+<!-- ===== POPUP EDIT KOMENTAR ===== -->
+<div class="popup" id="editCommentPopup">
+  <div class="popup-card">
+    <h3>Edit Komentar ✏️</h3>
+
+    <input
+      type="text"
+      id="editCommentInput"
+      placeholder="Edit komentar..."
+      style="width:100%; padding:10px; border-radius:10px; border:1px solid #ddd; margin:15px 0;"
+    >
+
+    <div class="btn-group">
+      <button class="popup-btn" onclick="confirmEditComment()">Simpan</button>
+      <button class="popup-btn" onclick="closeEditPopup()" style="background:#ccc;color:#333">
+        Batal
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- SCRIPT TERAKHIR -->
 <script src="script.js"></script>
