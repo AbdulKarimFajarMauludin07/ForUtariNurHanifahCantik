@@ -294,19 +294,69 @@ h1 {
   transform: scale(1.1);
   background: #ff7aa2;
 }
+/* Container foto */
 .foto-container {
-  display: flex;
-  flex-wrap: wrap; /* Supaya foto otomatis pindah ke baris baru */
-  justify-content: center; /* Supaya foto berada di tengah */
-  gap: 10px; /* Jarak antar foto */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* responsive */
+  gap: 10px; /* jarak antar foto */
   margin-top: 20px;
 }
-.foto-container img {
-  width: 200px; /* Sesuaikan ukuran foto */
-  height: 200px;
-  border-radius: 10px; /* Kalau mau pojok bulat */
-  object-fit: cover; /* Supaya foto tidak melenceng */
+
+/* Setiap item foto + tulisan */
+.foto-item {
+  text-align: center; /* teks di bawah foto dan di tengah */
 }
+
+/* Gambar di dalam item */
+.foto-item img {
+  width: 100%;  /* full lebar container item */
+  height: auto; /* proporsional */
+  border-radius: 10px;
+  object-fit: cover;
+  transition: transform 0.3s; /* efek hover opsional */
+}
+
+/* Tulisan di bawah foto */
+.foto-item p {
+  margin-top: 5px;
+  font-weight: bold;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Opsional: efek hover */
+.foto-item:hover img {
+  transform: scale(1.05);
+}
+
+.foto-item p {
+  margin-top: 5px;
+  font-weight: bold;
+  font-size: 14px;
+  color: #555;
+  word-wrap: break-word;   /* memaksa teks panjang wrap */
+  overflow-wrap: break-word; /* kompatibilitas lebih luas */
+  text-align: center;      /* supaya teks tetap center */
+}
+
+.next-btn-wrapper {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.next-btn-wrapper button {
+  background: #ff7aa2;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.next-btn-wrapper button:hover {
+  opacity: 0.9;
+}
+
 /* pastikan layer3 full height dan scrollable */
 #layer3 {
   overflow-y: auto;          /* scroll di layer */
@@ -532,4 +582,17 @@ video {
   object-fit: contain; /* potret / landscape aman */
   border-radius: 15px;
   background: #000;
+}
+.admin-badge {
+  background: linear-gradient(45deg, #ff9800, #ff5722);
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  margin-left: 6px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.moment,h2{
+  color: #ff7aa2;
 }
