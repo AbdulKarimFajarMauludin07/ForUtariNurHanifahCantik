@@ -205,7 +205,7 @@ video {
 
 /* SEMUA PARAGRAF */
 p {
-  font-family: "Dancing Script",Cursive;
+  font-family: "Fredoka", sans-serif;
   font-size: 18px;
   font-weight: 500;
   color: #555;
@@ -604,3 +604,4 @@ video {
 .moment,h2{
   color: #ff7aa2;
 }
+
