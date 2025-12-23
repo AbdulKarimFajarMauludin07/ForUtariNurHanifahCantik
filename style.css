@@ -47,8 +47,16 @@ h1, h2 {
 
 
 .long-text {
+  font-family: cursive;
   margin: 15px 0;
   line-height: 1.6;
+}
+
+.Next-text{
+   font-family: cursive;
+  margin: 15px 0;
+  line-height: 1.6;
+
 }
 
 input {
@@ -197,7 +205,7 @@ video {
 
 /* SEMUA PARAGRAF */
 p {
-  font-family: "Fredoka", sans-serif;
+  font-family: "Dancing Script",Cursive;
   font-size: 18px;
   font-weight: 500;
   color: #555;
@@ -596,5 +604,3 @@ video {
 .moment,h2{
   color: #ff7aa2;
 }
-
-
