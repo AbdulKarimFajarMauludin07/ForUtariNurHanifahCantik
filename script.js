@@ -125,8 +125,8 @@ document.addEventListener("mouseover", e => {
     btn.style.top = y + "px";
   }
 });
-const CORRECT_ID = "1";
-const CORRECT_PASS = "1";
+const CORRECT_ID = "Utari Nur Hanifah Cantik Banget";
+const CORRECT_PASS = "07-01-2025";
 
 function checkLogin() {
   const id = document.getElementById("loginId").value.trim();
@@ -157,7 +157,7 @@ document.addEventListener("click", () => {
 
 // ===== FIREBASE COMMENT FINAL FIX =====
 // ===== ADMIN FINAL (MASUK / CANCEL / KELUAR) =====
-const ADMIN_KEY = "1";
+const ADMIN_KEY = "slayerrr";
 
 // klik tombol "Mas EL"
 function enterAdminMode() {
