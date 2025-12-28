@@ -125,7 +125,7 @@ document.addEventListener("mouseover", e => {
     btn.style.top = y + "px";
   }
 });
-const CORRECT_ID = "Utari Nur Hanifah Cantik Banget";
+const CORRECT_ID = "Utari Nur Hanifah Cantik";
 const CORRECT_PASS = "07-01-2025";
 
 function checkLogin() {
@@ -403,3 +403,4 @@ function showNotif(text) {
 function closeNotif() {
   document.getElementById("notifPopup").style.display = "none";
 }
+
