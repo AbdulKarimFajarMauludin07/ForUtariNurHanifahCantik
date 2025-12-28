@@ -1,29 +1,30 @@
-/* ================= GLOBAL ================= */
 let currentLayer = 1;
 const totalLayer = 4;
 
-const music = document.getElementById("bgMusic");
-
-/* ================= LAYER CONTROL ================= */
+/* ===== LAYER CONTROL ===== */
 function showLayer(n) {
   document.querySelectorAll(".layer").forEach(l => l.classList.remove("active"));
-  const layer = document.getElementById("layer" + n);
-  if (layer) layer.classList.add("active");
+  document.getElementById("layer" + n).classList.add("active");
 
-  if (!music) return;
+  const music = document.getElementById("bgMusic");
 
   if (n === 3) {
     startEmojiRain();
-    if (music.paused) music.play().catch(() => {});
-  } else if (n === 4) {
+    if (music.paused) {
+      music.play().catch(() => {});
+    }
+  } 
+  else if (n === 4) {
     stopEmojiRain();
-    music.pause();
-    music.currentTime = 0;
-  } else {
+    music.pause();              // ⬅️ INI KUNCINYA
+    music.currentTime = 0;      // ⬅️ RESET BIAR BENERAN BERENTI
+  } 
+  else {
     stopEmojiRain();
     music.pause();
   }
 }
+
 
 function nextLayer() {
   if (currentLayer < totalLayer) {
@@ -44,7 +45,7 @@ function goToFirst() {
   showLayer(currentLayer);
 }
 
-/* ================= RUNAWAY BUTTON ================= */
+/* ===== BUTTON LARI ===== */
 document.querySelectorAll(".runaway").forEach(btn => {
   btn.addEventListener("mouseover", () => {
     btn.style.position = "absolute";
@@ -53,29 +54,31 @@ document.querySelectorAll(".runaway").forEach(btn => {
   });
 });
 
-/* ================= MUSIC BUTTON ================= */
-const musicBtn = document.getElementById("musicBtn");
-if (musicBtn && music) {
-  musicBtn.addEventListener("click", () => {
-    if (music.paused) {
-      music.play().catch(() => {});
-      musicBtn.textContent = "🔊";
-    } else {
-      music.pause();
-      musicBtn.textContent = "🔇";
-    }
-  });
+function closeAlert() {
+  loginAlert.style.display = "none";
 }
 
-/* ================= EMOJI RAIN ================= */
+/* ===== MUSIC ===== */
+const music = document.getElementById("bgMusic");
+const btn = document.getElementById("musicBtn");
+
+btn.addEventListener("click", () => {
+  if(music.paused){
+    music.play();
+    btn.textContent = "🔊";
+  } else {
+    music.pause();
+    btn.textContent = "🔇";
+  }
+});
+
+/* ===== EMOJI RAIN ===== */
 const emojiContainer = document.getElementById("emojiRain");
 const emojis = ["💖","🎉","🎈","🎁","🥳","🎂","✨","🌸","💕","🎊"];
 let emojiInterval;
 
 function startEmojiRain() {
   stopEmojiRain();
-  if (!emojiContainer) return;
-
   emojiInterval = setInterval(() => {
     const e = document.createElement("div");
     e.className = "emoji";
@@ -89,10 +92,39 @@ function startEmojiRain() {
 
 function stopEmojiRain() {
   clearInterval(emojiInterval);
-  if (emojiContainer) emojiContainer.innerHTML = "";
+  emojiContainer.innerHTML = "";
 }
 
-/* ================= LOGIN ================= */
+/* ===== KONFIRMASI LANJUT ===== */
+function openConfirm() {
+  document.getElementById("confirmBox").style.display = "flex";
+}
+
+function closeConfirm() {
+  document.getElementById("confirmBox").style.display = "none";
+}
+
+function confirmNext() {
+  closeConfirm();
+  nextLayer();
+}
+/* ===== BATAL LARI DI POPUP ===== */
+document.addEventListener("mouseover", e => {
+  if (e.target.classList.contains("runaway-confirm")) {
+    const btn = e.target;
+    const parent = btn.closest(".confirm-card");
+
+    const maxX = parent.clientWidth - btn.offsetWidth;
+    const maxY = parent.clientHeight - btn.offsetHeight;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    btn.style.position = "absolute";
+    btn.style.left = x + "px";
+    btn.style.top = y + "px";
+  }
+});
 const CORRECT_ID = "Utari Nur Hanifah Cantik";
 const CORRECT_PASS = "07-01-2025";
 
@@ -101,27 +133,26 @@ function checkLogin() {
   const pass = document.getElementById("loginPass").value.trim();
 
   if (id === CORRECT_ID && pass === CORRECT_PASS) {
-    goToLayer(3); // masuk ke layer 3
+    showLayer(3);
   } else {
-    document.getElementById("loginError").classList.add("show");
+    document.getElementById("loginError").style.display = "flex";
   }
 }
 
 function closeLoginError() {
-  document.getElementById("loginError").classList.remove("show");
+  document.getElementById("loginError").style.display = "none";
+  document.getElementById("loginPass").value = "";
 }
 
-/* ================= AUTOPLAY VIDEO (1x) ================= */
-document.addEventListener("click", () => {
-  const video = document.querySelector("video");
-  if (video && video.paused) {
-    video.play().catch(() => {});
-  }
-}, { once: true });
 
-/* ================= ADMIN MODE ================= */
+
+
+
+// ===== FIREBASE COMMENT FINAL FIX =====
+// ===== ADMIN FINAL (MASUK / CANCEL / KELUAR) =====
 const ADMIN_KEY = "slayerrr";
 
+// klik tombol "Mas EL"
 function enterAdminMode() {
   const isAdmin = sessionStorage.getItem("isAdmin") === "true";
 
@@ -134,30 +165,41 @@ function enterAdminMode() {
   btnGroup.innerHTML = "";
 
   if (isAdmin) {
+    // === SUDAH ADMIN ===
     text.innerText = "Kamu sedang di Mode Admin 👑";
     input.style.display = "none";
+
     btnGroup.innerHTML = `
-      <button onclick="logoutAdmin()">Keluar Admin</button>
-      <button onclick="closeAdminPopup()">Cancel</button>
+      <button class="popup-btn" onclick="logoutAdmin()">Keluar Admin</button>
+      <button class="popup-btn" onclick="closeAdminPopup()" style="background:#ccc;color:#333">
+        Cancel
+      </button>
     `;
   } else {
+    // === BELUM ADMIN ===
     text.innerText = "Masukkan Password Mas EL 🔐";
     input.style.display = "block";
     input.value = "";
+
     btnGroup.innerHTML = `
-      <button onclick="checkAdmin()">Masuk</button>
-      <button onclick="closeAdminPopup()">Cancel</button>
+      <button class="popup-btn" onclick="checkAdmin()">Masuk</button>
+      <button class="popup-btn" onclick="closeAdminPopup()" style="background:#ccc;color:#333">
+        Cancel
+      </button>
     `;
   }
 }
 
+// tutup popup
 function closeAdminPopup() {
   document.getElementById("adminPopup").style.display = "none";
   document.getElementById("adminPassword").value = "";
 }
 
+// cek password
 function checkAdmin() {
   const pass = document.getElementById("adminPassword").value.trim();
+
   if (pass === ADMIN_KEY) {
     sessionStorage.setItem("isAdmin", "true");
     closeAdminPopup();
@@ -168,12 +210,14 @@ function checkAdmin() {
   }
 }
 
+// logout admin
 function logoutAdmin() {
   sessionStorage.removeItem("isAdmin");
   closeAdminPopup();
   showNotif("Keluar dari Mode Admin 🚪");
 }
 
+// popup error
 function retryAdmin() {
   document.getElementById("adminErrorPopup").style.display = "none";
   enterAdminMode();
@@ -183,107 +227,167 @@ function closeAdminError() {
   document.getElementById("adminErrorPopup").style.display = "none";
 }
 
-/* ================= FIREBASE COMMENT ================= */
-if (typeof firebase !== "undefined") {
-  const commentRef = firebase.database().ref("comments");
 
-  function sendComment() {
-    const name = document.getElementById("name").value.trim();
-    const comment = document.getElementById("comment").value.trim();
 
-    if (!name || !comment) {
-      showNotif("Nama dan Pesan Wajib Diisi!");
-      return;
-    }
-
-    commentRef.push({
-      name,
-      text: comment,
-      time: Date.now(),
-      isAdmin: sessionStorage.getItem("isAdmin") === "true"
-    });
-
-    document.getElementById("comment").value = "";
-  }
-
-  function formatTime(ts) {
-    return new Date(ts).toLocaleString("id-ID", {
-      day:"2-digit", month:"short", year:"numeric",
-      hour:"2-digit", minute:"2-digit"
-    });
-  }
-
-  commentRef.on("value", snap => {
-    const list = document.getElementById("commentList");
-    const data = snap.val();
-    list.innerHTML = "";
-
-    if (!data) {
-      list.innerHTML = "<p>Belum Ada Pesan 💬</p>";
-      return;
-    }
-
-    const isAdmin = sessionStorage.getItem("isAdmin") === "true";
-
-    for (let id in data) {
-      const c = data[id];
-      list.innerHTML += `
-        <div class="chat ${c.isAdmin ? "right" : "left"}">
-          <div class="bubble">
-            <div class="name">${c.name} ${c.isAdmin ? "👑" : ""}</div>
-            <div class="text">${c.text}</div>
-            <div class="time">${formatTime(c.time)}</div>
-            ${isAdmin ? `
-              <button onclick="editComment('${id}')">Edit</button>
-              <button onclick="deleteComment('${id}')">Hapus</button>
-            ` : ""}
-          </div>
-        </div>
-      `;
-    }
-    list.scrollTop = list.scrollHeight;
-  });
-
-  let editTarget = null;
-  function editComment(id) {
-    editTarget = id;
-    commentRef.child(id).once("value", s => {
-      document.getElementById("editCommentInput").value = s.val().text;
-      document.getElementById("editCommentPopup").style.display = "flex";
-    });
-  }
-
-  function confirmEditComment() {
-    const text = document.getElementById("editCommentInput").value.trim();
-    if (text && editTarget) {
-      commentRef.child(editTarget).update({ text });
-    }
-    closeEditPopup();
-  }
-
-  function closeEditPopup() {
-    document.getElementById("editCommentPopup").style.display = "none";
-    editTarget = null;
-  }
-
-  let deleteTarget = null;
-  function deleteComment(id) {
-    deleteTarget = id;
-    document.getElementById("deleteConfirmPopup").style.display = "flex";
-  }
-
-  function confirmDeleteComment() {
-    if (deleteTarget) commentRef.child(deleteTarget).remove();
-    closeDeletePopup();
-  }
-
-  function closeDeletePopup() {
-    document.getElementById("deleteConfirmPopup").style.display = "none";
-    deleteTarget = null;
-  }
+// tombol "coba lagi"
+function retryAdmin() {
+  document.getElementById("adminErrorPopup").style.display = "none";
+  enterAdminMode();
 }
 
-/* ================= NOTIF ================= */
+// tombol "batal"
+function closeAdminError() {
+  document.getElementById("adminErrorPopup").style.display = "none";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// ===== FIREBASE REF =====
+const commentRef = firebase.database().ref("comments");
+
+// ===== KIRIM KOMENTAR =====
+function sendComment() {
+  const name = document.getElementById("name").value.trim();
+  const comment = document.getElementById("comment").value.trim();
+
+ if (!name || !comment) {
+  showNotif("Nama dan Pesan Wajib Diisi!");
+  return;
+}
+
+  // ADMIN DETEKSI DARI NAMA
+  const isAdminSession = sessionStorage.getItem("isAdmin") === "true";
+
+  commentRef.push({
+    name: name,
+    text: comment,
+    time: Date.now(),
+    isAdmin: isAdminSession
+
+  });
+
+  document.getElementById("comment").value = "";
+}
+
+// ===== FORMAT WAKTU =====
+function formatTime(timestamp) {
+  const d = new Date(timestamp);
+  return d.toLocaleString("id-ID", {
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
+commentRef.on("value", snapshot => {
+  const data = snapshot.val();
+  const list = document.getElementById("commentList");
+  list.innerHTML = "";
+
+  if (!data) {
+    list.innerHTML = "<p style='text-align:center'>Belum Ada Pesan 💬</p>";
+    return;
+  }
+
+  const isAdminSession = sessionStorage.getItem("isAdmin") === "true";
+
+  for (let id in data) {
+    const item = data[id];
+    const side = item.isAdmin ? "right" : "left";
+    const time = formatTime(item.time);
+
+    list.innerHTML += `
+      <div class="chat ${side}">
+        <div class="bubble">
+
+          <div class="name">
+               ${item.name}
+               ${item.isAdmin ? `<span class="admin-badge">👑</span>` : ""}
+          </div>
+
+          <div class="text">${item.text}</div>
+          <div class="time">${time}</div>
+
+          ${
+            isAdminSession
+              ? `<div class="admin-btn">
+                   <button onclick="editComment('${id}')">Edit</button>
+                   <button onclick="deleteComment('${id}')">Hapus</button>
+                 </div>`
+              : ""
+          }
+        </div>
+      </div>
+    `;
+  }
+
+  list.scrollTop = list.scrollHeight;
+});
+
+
+// ===== ADMIN ACTION =====
+let deleteTargetId = null;
+
+function deleteComment(id) {
+  deleteTargetId = id;
+  document.getElementById("deleteConfirmPopup").style.display = "flex";
+}
+
+function confirmDeleteComment() {
+  if (deleteTargetId) {
+    commentRef.child(deleteTargetId).remove();
+    deleteTargetId = null;
+  }
+  closeDeletePopup();
+}
+
+function closeDeletePopup() {
+  document.getElementById("deleteConfirmPopup").style.display = "none";
+  deleteTargetId = null;
+}
+
+
+let editTargetId = null;
+
+// buka popup edit
+function editComment(id) {
+  editTargetId = id;
+
+  commentRef.child(id).once("value", snap => {
+    document.getElementById("editCommentInput").value = snap.val().text;
+    document.getElementById("editCommentPopup").style.display = "flex";
+  });
+}
+
+// simpan edit
+function confirmEditComment() {
+  const newText = document.getElementById("editCommentInput").value.trim();
+
+  if (newText && editTargetId) {
+    commentRef.child(editTargetId).update({ text: newText });
+  }
+
+  closeEditPopup();
+}
+
+// tutup popup
+function closeEditPopup() {
+  document.getElementById("editCommentPopup").style.display = "none";
+  editTargetId = null;
+}
+
 function showNotif(text) {
   document.getElementById("notifText").innerText = text;
   document.getElementById("notifPopup").style.display = "flex";
@@ -292,4 +396,3 @@ function showNotif(text) {
 function closeNotif() {
   document.getElementById("notifPopup").style.display = "none";
 }
-
