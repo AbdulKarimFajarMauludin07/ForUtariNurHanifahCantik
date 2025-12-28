@@ -110,12 +110,7 @@ button:hover {
   border-radius: 12px;
 }
 
-/* VIDEO */
-video {
-  width: 100%;
-  border-radius: 15px;
-  margin: 10px 0;
-}
+
 
 /* EMOJI RAIN */
 #emojiRain {
@@ -584,13 +579,22 @@ h1 {
   margin-left: 4px;
 }
 
+/* VIDEO FINAL */
 video {
   width: 100%;
-  max-height: 60vh;     /* biar ga kegedean */
-  object-fit: contain; /* potret / landscape aman */
+  max-width: 720px;
+  height: auto;
+
+  max-height: 60vh;
+  object-fit: contain;
+
   border-radius: 15px;
+  margin: 10px auto;
+  display: block;
+
   background: #000;
 }
+
 .admin-badge {
   background: linear-gradient(45deg, #ff9800, #ff5722);
   color: white;
@@ -604,3 +608,4 @@ video {
 .moment,h2{
   color: #ff7aa2;
 }
+
