@@ -97,19 +97,18 @@ const CORRECT_ID = "Utari Nur Hanifah Cantik";
 const CORRECT_PASS = "07-01-2025";
 
 function checkLogin() {
-  const id = document.getElementById("loginId")?.value.trim();
-  const pass = document.getElementById("loginPass")?.value.trim();
+  const id = document.getElementById("loginId").value.trim();
+  const pass = document.getElementById("loginPass").value.trim();
 
   if (id === CORRECT_ID && pass === CORRECT_PASS) {
-    showLayer(3);
+    goToLayer(3); // masuk ke layer 3
   } else {
-    document.getElementById("loginError").style.display = "flex";
+    document.getElementById("loginError").classList.add("show");
   }
 }
 
 function closeLoginError() {
-  document.getElementById("loginError").style.display = "none";
-  document.getElementById("loginPass").value = "";
+  document.getElementById("loginError").classList.remove("show");
 }
 
 /* ================= AUTOPLAY VIDEO (1x) ================= */
@@ -293,3 +292,4 @@ function showNotif(text) {
 function closeNotif() {
   document.getElementById("notifPopup").style.display = "none";
 }
+
